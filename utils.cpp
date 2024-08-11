@@ -14,23 +14,19 @@ int bin_reach(const std::vector<int>& bin_reach_arr, int target) {
     int left = 0;
     int right = bin_reach_arr.size() - 1;
 
-    while (left < right) { // продолжаем поиск, пока left не пересечет right
-        int mid = left + (right - left) / 2; // находим середину
+    while (left < right) { 
+        int mid = left + (right - left) / 2; 
 
         if (target <= bin_reach_arr[mid]) {
-            // если целевое значение меньше или равно среднему элементу,
-            // сужаем поиск до левой половины (включая середину)
             right = mid;
         } else {
-            // иначе, сужаем поиск до правой половины (исключая середину)
             left = mid + 1;
         }
     }
 
-    // после выхода из цикла left будет указывать на позицию для вставки
     if (bin_reach_arr[left] == target) {
-        return left; // возвращаем индекс найденного элемента
+        return left;
     }
 
-    return left; // если элемент не найден, возвращаем место, куда он мог бы быть вставлен
+    return left; 
 }
