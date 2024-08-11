@@ -3,13 +3,16 @@
 #include <algorithm> // для std::sort
 #include <cstdlib>   // для std::rand и std::srand
 #include <ctime>     // для std::time
-#include "utils.h"
+#include "BinarySearch.h"
 
 int main() {
     std::srand(std::time(0)); // инициализация генератора случайных чисел
 
     int n = 10; // длина вектора
-    std::vector<int> main_arr = createRandomVector(n);
+    std::vector<int> main_arr(n);
+    for (int i = 0; i < n; ++i) {
+        main_arr[i] = std::rand() % 100; // случайные числа в диапазоне от 0 до 99
+    }
 
     // Вывод случайного вектора длиной 10
     std::cout << "Original vector: ";
@@ -33,8 +36,9 @@ int main() {
     std::cout << "Type down a digit for search: ";
     std::cin >> user_target;
 
-    // Вызов функции бинарного поиска
-    int result = bin_reach(main_arr, user_target);
+    // Создаем объект класса BinarySearch и выполняем поиск
+    BinarySearch binary_search(main_arr);
+    int result = binary_search.search(user_target);
 
     if (result < main_arr.size() && main_arr[result] == user_target) {
         std::cout << "Your element is in " << result + 1 << "-th place" << std::endl;
