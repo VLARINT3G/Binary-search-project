@@ -1,49 +1,46 @@
 #include <iostream>
 #include <vector>
-#include <algorithm> // для std::sort
-#include <cstdlib>   // для std::rand и std::srand
-#include <ctime>     // для std::time
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
 #include "BinarySearch.h"
 
 int main() {
-    std::srand(std::time(0)); // инициализация генератора случайных чисел
+    std::srand(static_cast<unsigned>(std::time(0)));
 
-    int n = 10; // длина вектора
-    std::vector<int> main_arr(n);
-    for (int i = 0; i < n; ++i) {
-        main_arr[i] = std::rand() % 100; // случайные числа в диапазоне от 0 до 99
+    const IndexType n = 10;
+    SearchArray mainArr(n);
+    for (IndexType i = 0; i < n; ++i) {
+        mainArr[i] = std::rand() % 100;
     }
 
-    // Вывод случайного вектора длиной 10
     std::cout << "Original vector: ";
-    for (int i = 0; i < main_arr.size(); ++i) {
-        std::cout << main_arr[i] << " ";
+    for (ValueType num : mainArr) {
+        std::cout << num << " ";
     }
     std::cout << std::endl;
 
-    // Сортировка вектора
-    std::sort(main_arr.begin(), main_arr.end());
+    std::sort(mainArr.begin(), mainArr.end());
 
-    // Печать отсортированного вектора
     std::cout << "Sorted vector: ";
-    for (int i = 0; i < main_arr.size(); ++i) {
-        std::cout << main_arr[i] << " ";
+    for (ValueType num : mainArr) {
+        std::cout << num << " ";
     }
     std::cout << std::endl;
 
-    // Значение для поиска
-    int user_target;
+    ValueType userTarget;
     std::cout << "Type down a digit for search: ";
-    std::cin >> user_target;
+    std::cin >> userTarget;
 
-    // Создаем объект класса BinarySearch и выполняем поиск
-    BinarySearch binary_search(main_arr);
-    int result = binary_search.search(user_target);
+    BinarySearch binarySearch(mainArr);
+    IndexType result = binarySearch.search(userTarget);
 
-    if (result < main_arr.size() && main_arr[result] == user_target) {
-        std::cout << "Your element is in " << result + 1 << "-th place" << std::endl;
+    if (result < mainArr.size() && mainArr[result] == userTarget) {
+        std::cout << "Your element is in "
+                  << result + 1 << "-th place" << std::endl;
     } else {
-        std::cout << "Your element is not found. It could be placed at position " << result + 1 << std::endl;
+        std::cout << "Your element is not found. It could be placed at position "
+                  << result + 1 << std::endl;
     }
 
     return 0;

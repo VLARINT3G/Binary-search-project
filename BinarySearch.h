@@ -1,23 +1,21 @@
-#ifndef BINARYSEARCH_H
-#define BINARYSEARCH_H
+#ifndef BINARY_SEARCH_H
+#define BINARY_SEARCH_H
 
 #include <vector>
+#include <cstdint>
+
+using SearchArray = std::vector<int32_t>;
+using IndexType = std::size_t;
+using ValueType = int32_t;
 
 class BinarySearch {
-private:
-    std::vector<int> search_array;
-
 public:
-    
-    BinarySearch(const std::vector<int>& arr) : search_array(arr) {}
+    explicit BinarySearch(const SearchArray& arr);
+    IndexType search(ValueType target);
+    void setArray(const SearchArray& arr);
 
-   
-    int search(int target);
-
-   
-    void setArray(const std::vector<int>& arr) {
-        search_array = arr;
-    }
+private:
+    SearchArray searchArray_;
 };
 
-#endif // BINARYSEARCH_H
+#endif  // BINARY_SEARCH_H
