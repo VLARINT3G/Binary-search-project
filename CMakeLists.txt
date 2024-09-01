@@ -1,26 +1,36 @@
 cmake_minimum_required(VERSION 3.10)
+
 project(BinarySearchProject)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-include_directories(${CMAKE_SOURCE_DIR}/src)
-
-include(FetchContent)
-
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG        release-1.11.0
+set(SOURCE_FILES
+    src/main.cpp        # Путь к main.cpp относительно корня проекта
+    src/BinarySearch.cpp # Путь к BinarySearch.cpp относительно корня проекта
 )
-FetchContent_MakeAvailable(googletest)
 
-add_executable(main_bin_search src/main.cpp)
+add_executable(main_bin_search ${SOURCE_FILES})
 
-add_executable(test_bin_search tests/TestBinarySearch.cpp)
-
-target_link_libraries(test_bin_search gtest_main)
+target_include_directories(main_bin_search PRIVATE src)
 
 enable_testing()
 
-add_test(NAME BinarySearchTest COMMAND test_bin_search)
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+add_executable(test_binary_search
+    tests/TestBinarySearch.cpp  # Укажите путь к тестовому файлу
+    src/BinarySearch.cpp        # Подключение реализации для тестов
+)
+
+target_link_libraries(test_binary_search gtest gtest_main)
+
+target_include_directories(test_binary_search PRIVATE src)
+
+add_test(NAME BinarySearchTests COMMAND test_binary_search)
