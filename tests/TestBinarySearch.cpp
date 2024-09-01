@@ -1,6 +1,17 @@
-#include "gtest/gtest.h"
-#include "BinarySearch.h"
+/**
+ * @file TestBinarySearch.cpp
+ * @brief Юнит-тесты для класса BinarySearch.
+ *
+ * Этот файл содержит юнит-тесты для проверки корректности работы класса
+ * BinarySearch с использованием библиотеки Google Test.
+ */
 
+#include "BinarySearch.h"
+#include "gtest/gtest.h"
+
+/**
+ * @brief Тест проверяет корректную работу поиска с отрицательными значениями.
+ */
 TEST(BinarySearchTest, HandlesNegativeValues) {
     SearchArray arr = {-10, -5, 0, 5, 10};
     BinarySearch binarySearch(arr);
@@ -12,6 +23,9 @@ TEST(BinarySearchTest, HandlesNegativeValues) {
     EXPECT_EQ(binarySearch.search(10), 4);
 }
 
+/**
+ * @brief Тест проверяет работу бинарного поиска с дубликатами в массиве.
+ */
 TEST(BinarySearchTest, HandlesDuplicateValues) {
     SearchArray arr = {1, 2, 2, 2, 3, 4, 5};
     BinarySearch binarySearch(arr);
@@ -23,6 +37,9 @@ TEST(BinarySearchTest, HandlesDuplicateValues) {
     EXPECT_EQ(binarySearch.search(6), 7);
 }
 
+/**
+ * @brief Тест проверяет работу бинарного поиска на большом массиве.
+ */
 TEST(BinarySearchTest, HandlesLargeArray) {
     const IndexType n = 1000000;
     SearchArray arr(n);
@@ -37,6 +54,9 @@ TEST(BinarySearchTest, HandlesLargeArray) {
     EXPECT_EQ(binarySearch.search(1), 1);
 }
 
+/**
+ * @brief Тест проверяет работу бинарного поиска на массиве с повторяющимися значениями.
+ */
 TEST(BinarySearchTest, HandlesSingleValueRepeated) {
     SearchArray arr = {7, 7, 7, 7, 7};
     BinarySearch binarySearch(arr);
