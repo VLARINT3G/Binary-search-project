@@ -1,23 +1,52 @@
+/**
+ * @file main.cpp
+ * @brief Основной файл программы, демонстрирующий использование класса BinarySearch.
+ *
+ * Этот файл содержит пример использования класса BinarySearch
+ * для выполнения бинарного поиска в массиве целых чисел.
+ */
+
+#include <iostream>
+#include <vector>
+#include <algorithm> // Для std::sort
+#include <cstdlib>   // Для std::rand()
+#include <cstdint>   // Для int32_t
 #include "BinarySearch.h"
 
-BinarySearch::BinarySearch(const SearchArray& arr)
-    : _searchArray(arr) {}
+/**
+ * @brief Главная функция программы.
+ * @return Код завершения программы.
+ */
+int main() {
+    std::cout << "Введите количество элементов: ";
+    std::size_t n;
+    std::cin >> n;
 
-IndexType BinarySearch::search(int32_t target) {
-    IndexType left = 0, right = _searchArray.size() - 1;
+    SearchArray main_arr(n);  ///< Массив случайных чисел
 
-    while (left < right) {
-        IndexType mid = left + (right - left) / 2;
-        if (target <= _searchArray[mid]) {
-            right = mid;
-        } else {
-            left = mid + 1;
-        }
+    for (std::size_t i = 0; i < n; ++i) {
+        main_arr[i] = std::rand() % 100;
     }
 
-    return (_searchArray[left] == target) ? left : left;
-}
+    std::cout << "Случайные числа в массиве: ";
+    for (const auto& num : main_arr) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
 
-void BinarySearch::setArray(const SearchArray& arr) {
-    _searchArray = arr;
+    std::sort(main_arr.begin(), main_arr.end());
+    BinarySearch binarySearch(main_arr);
+
+    std::cout << "Введите число для поиска: ";
+    int32_t target;
+    std::cin >> target;
+
+    IndexType index = binarySearch.search(target);
+    if (index != main_arr.size()) {
+        std::cout << "Число найдено на позиции: " << index << std::endl;
+    } else {
+        std::cout << "Число не найдено." << std::endl;
+    }
+
+    return 0;
 }
