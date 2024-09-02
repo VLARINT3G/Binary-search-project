@@ -18,7 +18,7 @@
  * @return Код завершения программы.
  */
 int main() {
-    std::cout << "Введите количество элементов: ";
+    std::cout << "Write down quantity of elements of massive: ";
     std::size_t n;
     std::cin >> n;
 
@@ -28,25 +28,29 @@ int main() {
         main_arr[i] = std::rand() % 100;
     }
 
-    std::cout << "Случайные числа в массиве: ";
+    std::cout << "Random massive of digits: ";
     for (const auto& num : main_arr) {
         std::cout << num << " ";
     }
     std::cout << std::endl;
 
     std::sort(main_arr.begin(), main_arr.end());
+    std::cout << "Sorted massive of digits: ";
+    for (const auto& num : main_arr) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
     BinarySearch binarySearch(main_arr);
 
-    std::cout << "Введите число для поиска: ";
+    std::cout << "Write down a digit for search: ";
     int32_t target;
     std::cin >> target;
 
     IndexType index = binarySearch.search(target);
-    if (index != main_arr.size()) {
-        std::cout << "Число найдено на позиции: " << index << std::endl;
-    } else {
-        std::cout << "Число не найдено." << std::endl;
+    if (index < main_arr.size() && main_arr[index] == target){
+        std::cout << "Element is found on position: " << index + 1 << "-th place. " << std::endl;
+    } else{
+        std::cout << "Element is not found.";
     }
-
     return 0;
 }

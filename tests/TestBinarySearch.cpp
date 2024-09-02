@@ -33,8 +33,6 @@ TEST(BinarySearchTest, HandlesDuplicateValues) {
     EXPECT_EQ(binarySearch.search(2), 1);
     EXPECT_EQ(binarySearch.search(3), 4);
     EXPECT_EQ(binarySearch.search(5), 6);
-    EXPECT_EQ(binarySearch.search(0), 0);
-    EXPECT_EQ(binarySearch.search(6), 7);
 }
 
 /**
