@@ -28,28 +28,26 @@ BinarySearch::BinarySearch(const SearchArray& arr) : _searchArray(arr) {}
  */
 IndexType BinarySearch::search(int32_t target) const {
     IndexType left = 0;
-    IndexType right = _searchArray.size();
+    IndexType right = _searchArray.size();  // Полуинтервал [left, right)
 
     // Основной цикл поиска
-    while (left < right) {
-        IndexType mid = left + (right - left) / 2;
+    while (left + 1 < right) {  // Пока разница больше 1
+        IndexType mid = (left + right) / 2;
 
-        if (_searchArray[mid] == target) {
-            return mid; // Возвращаем индекс найденного элемента
-        } else if (_searchArray[mid] < target) {
-            left = mid + 1;
+        if (_searchArray[mid] <= target) {
+            left = mid;  // Отсекаем правую часть
         } else {
-            right = mid;
+            right = mid;  // Отсекаем левую часть
         }
     }
 
-    // Проверяем, корректно ли рассчитан left для возврата
+    // Проверяем, найден ли элемент в left
     if (left < _searchArray.size() && _searchArray[left] == target) {
         return left;
     }
 
-    // Элемент не найден, возвращаем позицию для вставки или ближайшую позицию
-    return _searchArray.size(); // Условие обработки отсутствующего элемента
+    // Если элемент не найден, возвращаем размер массива
+    return _searchArray.size();
 }
 
 /**
