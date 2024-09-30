@@ -3,55 +3,60 @@
  * @brief Реализация методов класса BinarySearch.
  *
  * Этот файл содержит реализацию методов класса BinarySearch,
- * который выполняет бинарный поиск в массиве целых чисел без использования итераторов.
+ * который выполняет бинарный поиск в массиве целых чисел.
  */
 
 #include "BinarySearch.h"
+#include <algorithm>  // Для std::sort
 
 /**
  * @brief Конструктор класса BinarySearch.
  *
- * Инициализирует внутренний массив значениями переданного массива.
+ * Инициализирует объект бинарного поиска и сохраняет переданный массив.
  *
  * @param arr Массив целых чисел для поиска.
  */
 BinarySearch::BinarySearch(const SearchArray& arr) : _searchArray(arr) {}
 
 /**
- * @brief Метод поиска без использования итераторов.
+ * @brief Метод поиска элемента в массиве.
  *
  * Выполняет бинарный поиск целевого значения в массиве.
- * Если значение найдено, возвращается его индекс; если не найдено, возвращается ближайший индекс.
+ * Если значение найдено, возвращается его индекс; если не найдено,
+ * возвращается размер массива, что означает, что элемент отсутствует.
  *
- * @param target Целевое значение, которое нужно найти.
- * @return IndexType Индекс найденного элемента или ближайшего к нему.
+ * @param target Целевое значение для поиска.
+ * @return IndexType Индекс найденного элемента или размер массива, если элемент не найден.
  */
 IndexType BinarySearch::search(int32_t target) const {
-    IndexType left = 0;
-    IndexType right = _searchArray.size();  // Полуинтервал [left, right)
+    // Копируем и сортируем массив для бинарного поиска
+    SearchArray sortedArray = _searchArray;
+    std::sort(sortedArray.begin(), sortedArray.end());
 
-    // Основной цикл поиска
-    while (left + 1 < right) {  // Пока разница больше 1
+    IndexType left = 0;
+    IndexType right = sortedArray.size();  // Полуинтервал [left, right)
+
+    // Основной цикл бинарного поиска
+    while (left + 1 < right) {
         IndexType mid = (left + right) / 2;
 
-        if (_searchArray[mid] <= target) {
+        if (sortedArray[mid] <= target) {
             left = mid;  // Отсекаем правую часть
         } else {
             right = mid;  // Отсекаем левую часть
         }
     }
 
-    // Проверяем, найден ли элемент в left
-    if (left < _searchArray.size() && _searchArray[left] == target) {
-        return left;
+    // Проверяем, найден ли элемент на позиции left
+    if (left < sortedArray.size() && sortedArray[left] == target) {
+        return left;  // Возвращаем индекс найденного элемента
     }
 
-    // Если элемент не найден, возвращаем размер массива
-    return _searchArray.size();
+    return sortedArray.size();  // Элемент не найден, возвращаем размер массива
 }
 
 /**
- * @brief Устанавливает новый массив для поиска.
+ * @brief Метод для установки нового массива.
  *
  * Заменяет текущий массив на новый, предоставленный пользователем.
  *
