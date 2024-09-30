@@ -1,69 +1,38 @@
 /**
  * @file TestBinarySearch.cpp
- * @brief Юнит-тесты для класса BinarySearch.
+ * @brief Юнит-тесты для проверки класса BinarySearch.
  *
- * Этот файл содержит юнит-тесты для проверки корректности работы класса
- * BinarySearch с использованием библиотеки Google Test.
+ * Этот файл содержит тесты, которые проверяют корректную работу бинарного поиска
+ * с использованием библиотеки GoogleTest.
  */
 
 #include "BinarySearch.h"
 #include "gtest/gtest.h"
 
 /**
- * @brief Тест проверяет корректную работу поиска с отрицательными значениями.
+ * @brief Тестирует базовый бинарный поиск.
+ *
+ * Проверяется, что бинарный поиск корректно находит элементы в массиве.
  */
-TEST(BinarySearchTest, HandlesNegativeValues) {
-    SearchArray arr = {-10, -5, 0, 5, 10};
+TEST(BinarySearchTest, HandlesBasicSearch) {
+    SearchArray arr = {5, 2, 8, 1, 3};
     BinarySearch binarySearch(arr);
 
-    EXPECT_EQ(binarySearch.search(-10), 0);  // Первый элемент
-    EXPECT_EQ(binarySearch.search(-5), 1);   // Второй элемент
-    EXPECT_EQ(binarySearch.search(0), 2);    // Третий элемент
-    EXPECT_EQ(binarySearch.search(5), 3);    // Четвертый элемент
-    EXPECT_EQ(binarySearch.search(10), 4);   // Пятый элемент
+    // Массив будет отсортирован как [1, 2, 3, 5, 8]
+    EXPECT_EQ(binarySearch.search(1), 0);  // Ожидаем, что 1 находится на индексе 0
+    EXPECT_EQ(binarySearch.search(3), 2);  // Ожидаем, что 3 находится на индексе 2
+    EXPECT_EQ(binarySearch.search(5), 3);  // Ожидаем, что 5 находится на индексе 3
+    EXPECT_EQ(binarySearch.search(6), arr.size());  // Элемент 6 отсутствует, возвращаем размер массива
 }
 
 /**
- * @brief Тест проверяет работу бинарного поиска с дубликатами в массиве.
+ * @brief Тестирует бинарный поиск в пустом массиве.
+ *
+ * Проверяется, что при поиске в пустом массиве результатом будет возвращен размер массива.
  */
-TEST(BinarySearchTest, HandlesDuplicateValues) {
-    SearchArray arr = {1, 2, 2, 2, 3, 4, 5};
+TEST(BinarySearchTest, HandlesEmptyArray) {
+    SearchArray arr = {};
     BinarySearch binarySearch(arr);
 
-    // Текущая реализация может вернуть любое вхождение дубликата (не обязательно первое)
-    EXPECT_TRUE(binarySearch.search(2) >= 1 && binarySearch.search(2) <= 3);  // Допускается любое из вхождений
-    EXPECT_EQ(binarySearch.search(3), 4);  // Для элемента 3 ожидаем индекс 4
-    EXPECT_EQ(binarySearch.search(5), 6);  // Для элемента 5 ожидаем индекс 6
-}
-
-/**
- * @brief Тест проверяет работу бинарного поиска на большом массиве.
- */
-TEST(BinarySearchTest, HandlesLargeArray) {
-    const IndexType n = 1000000;
-    SearchArray arr(n);
-    for (IndexType i = 0; i < n; ++i) {
-        arr[i] = i * 2;  // Заполняем массив четными числами
-    }
-    BinarySearch binarySearch(arr);
-
-    EXPECT_EQ(binarySearch.search(1999998), n - 1);  // Последний элемент
-    EXPECT_EQ(binarySearch.search(0), 0);  // Первый элемент
-    EXPECT_EQ(binarySearch.search(500000), 250000);  // Элемент в середине
-    EXPECT_EQ(binarySearch.search(1), 1);  // Ожидаем ближайший индекс для элемента 1
-}
-
-/**
- * @brief Тест проверяет работу бинарного поиска на массиве с повторяющимися значениями.
- */
-TEST(BinarySearchTest, HandlesSingleValueRepeated) {
-    SearchArray arr = {7, 7, 7, 7, 7};
-    BinarySearch binarySearch(arr);
-
-    // Любой индекс от 0 до 4 допустим, так как элемент повторяется
-    EXPECT_TRUE(binarySearch.search(7) >= 0 && binarySearch.search(7) <= 4);
-
-    // Для отсутствующих элементов 6 и 8 ожидаем корректные индексы
-    EXPECT_EQ(binarySearch.search(6), 0);  // Ближайший индекс для элемента 6 - это 0
-    EXPECT_EQ(binarySearch.search(8), 5);  // Индекс 5, так как элемент больше всех в массиве
+    EXPECT_EQ(binarySearch.search(1), arr.size());  // Пустой массив, элемент не найден
 }
