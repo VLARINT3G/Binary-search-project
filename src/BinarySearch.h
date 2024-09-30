@@ -25,7 +25,7 @@ using IndexType = std::size_t;
 class BinarySearch {
 public:
     /**
-     * @brief Класс BinarySearch.
+     * @brief Конструктор класса BinarySearch.
      * @param arr Массив целых чисел для поиска.
      */
     explicit BinarySearch(const SearchArray& arr);
