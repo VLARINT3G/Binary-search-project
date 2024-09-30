@@ -1,12 +1,5 @@
-/**
- * @file BinarySearch.cpp
- * @brief Реализация методов класса BinarySearch.
- *
- * Этот файл содержит реализацию методов класса BinarySearch,
- * который выполняет бинарный поиск в массиве целых чисел.
- */
-
 #include "BinarySearch.h"
+#include "SimpleLogger.h"
 #include <algorithm>  // Для std::sort
 
 /**
@@ -29,30 +22,34 @@ BinarySearch::BinarySearch(const SearchArray& arr) : _searchArray(arr) {}
  * @return IndexType Индекс найденного элемента или размер массива, если элемент не найден.
  */
 IndexType BinarySearch::search(int32_t target) const {
-    // Копируем и сортируем массив для бинарного поиска
     SearchArray sortedArray = _searchArray;
     std::sort(sortedArray.begin(), sortedArray.end());
 
-    IndexType left = 0;
-    IndexType right = sortedArray.size();  // Полуинтервал [left, right)
+    SimpleLogger::log("Starting binary search for value: " + std::to_string(target));
 
-    // Основной цикл бинарного поиска
+    IndexType left = 0;
+    IndexType right = sortedArray.size();
+
     while (left + 1 < right) {
         IndexType mid = (left + right) / 2;
 
+        SimpleLogger::log("Checking middle index: " + std::to_string(mid) +
+                          ", value: " + std::to_string(sortedArray[mid]));
+
         if (sortedArray[mid] <= target) {
-            left = mid;  // Отсекаем правую часть
+            left = mid;
         } else {
-            right = mid;  // Отсекаем левую часть
+            right = mid;
         }
     }
 
-    // Проверяем, найден ли элемент на позиции left
     if (left < sortedArray.size() && sortedArray[left] == target) {
-        return left;  // Возвращаем индекс найденного элемента
+        SimpleLogger::log("Element found at index: " + std::to_string(left));
+        return left;
     }
 
-    return sortedArray.size();  // Элемент не найден, возвращаем размер массива
+    SimpleLogger::log("Element not found.");
+    return sortedArray.size();
 }
 
 /**
