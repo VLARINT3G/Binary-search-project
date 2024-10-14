@@ -9,7 +9,7 @@
  *
  * @param arr Массив целых чисел для поиска.
  */
-BinarySearch::BinarySearch(const SearchArray& arr) : _searchArray(arr) {}
+BinarySearch::BinarySearch(const IntArray& arr) : data(arr) {}
 
 /**
  * @brief Метод поиска элемента в массиве.
@@ -22,7 +22,7 @@ BinarySearch::BinarySearch(const SearchArray& arr) : _searchArray(arr) {}
  * @return IndexType Индекс найденного элемента или размер массива, если элемент не найден.
  */
 IndexType BinarySearch::search(int32_t target) const {
-    SearchArray sortedArray = _searchArray;
+    IntArray sortedArray = data;
     std::sort(sortedArray.begin(), sortedArray.end());
 
     SimpleLogger::log("Starting binary search for value: " + std::to_string(target));
@@ -59,6 +59,6 @@ IndexType BinarySearch::search(int32_t target) const {
  *
  * @param arr Новый массив целых чисел.
  */
-void BinarySearch::setArray(const SearchArray& arr) {
-    _searchArray = arr;
+void BinarySearch::setArray(const IntArray& arr) {
+    data = arr;
 }
