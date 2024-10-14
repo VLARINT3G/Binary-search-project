@@ -1,10 +1,13 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 project(BinarySearchProject)
 
 # Указываем стандарт C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Указываем пути к исходникам и заголовкам
+include_directories(src)
 
 # Источники программы
 set(SOURCE_FILES
@@ -57,6 +60,6 @@ if(DOXYGEN_FOUND)
             COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
             COMMENT "Генерация API документации с помощью Doxygen"
-            VERБATIM
+            VERBATIM
     )
 endif()
