@@ -6,8 +6,8 @@
  * BinarySearch с использованием библиотеки Google Test.
  */
 
-#include "BinarySearch.h"
-#include "gtest/gtest.h"
+#include <BinarySearch.h>
+#include <gtest/gtest.h>
 
 /**
  * @brief Тест проверяет корректную работу поиска с отрицательными значениями.
