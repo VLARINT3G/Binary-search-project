@@ -3,57 +3,63 @@
 #include <algorithm>
 #include <cstdlib>
 #include <cstdint>
-#include "BinarySearch.h"
-#include "SimpleLogger.h"  // Подключаем логгер
+#include <BinarySearch.h>
+#include <SimpleLogger.h>
 
 /**
  * @brief Главная функция программы.
+ *
+ * Выполняет создание случайного массива, его сортировку и поиск заданного элемента
+ * с использованием бинарного поиска. Все ключевые события логируются.
+ *
  * @return Код завершения программы.
  */
 int main() {
-    SimpleLogger::log("Program started.");
+    SimpleLogger::log("Program started.", LogLevel::INFO);
 
-    std::cout << "Write down quantity of elements of massive: ";
+    std::cout << "Enter the number of elements in the array: ";
     std::size_t n;
     std::cin >> n;
 
-    SearchArray main_arr(n);
-    SimpleLogger::log("Generated array with " + std::to_string(n) + " elements.");
+    IntArray mainArray(n);
+    SimpleLogger::log("Generated array with " + std::to_string(n) + " elements.", LogLevel::INFO);
 
     for (std::size_t i = 0; i < n; ++i) {
-        main_arr[i] = std::rand() % 100;
+        mainArray[i] = std::rand() % 100;
     }
 
-    std::cout << "Random massive of digits: ";
-    for (const auto& num : main_arr) {
+    std::cout << "Random array of numbers: ";
+    for (const auto& num : mainArray) {
         std::cout << num << " ";
     }
     std::cout << std::endl;
 
-    SimpleLogger::log("Array sorted.");
-    std::sort(main_arr.begin(), main_arr.end());
-    std::cout << "Sorted massive of digits: ";
-    for (const auto& num : main_arr) {
+    std::sort(mainArray.begin(), mainArray.end());
+    SimpleLogger::log("Array sorted.", LogLevel::INFO);
+
+    std::cout << "Sorted array of numbers: ";
+    for (const auto& num : mainArray) {
         std::cout << num << " ";
     }
     std::cout << std::endl;
 
-    BinarySearch binarySearch(main_arr);
+    BinarySearch binarySearch(mainArray);
 
-    std::cout << "Write down a digit for search: ";
+    std::cout << "Enter a number to search for: ";
     int32_t target;
     std::cin >> target;
 
-    SimpleLogger::log("User is searching for value: " + std::to_string(target));
+    SimpleLogger::log("User is searching for value: " + std::to_string(target), LogLevel::INFO);
     IndexType index = binarySearch.search(target);
-    if (index < main_arr.size() && main_arr[index] == target) {
-        std::cout << "Element is found on position: " << index + 1 << "-th place." << std::endl;
-        SimpleLogger::log("Element found at position: " + std::to_string(index + 1));
+
+    if (index < mainArray.size() && mainArray[index] == target) {
+        std::cout << "Element found at position: " << index + 1 << "-th place." << std::endl;
+        SimpleLogger::log("Element found at position: " + std::to_string(index + 1), LogLevel::INFO);
     } else {
-        std::cout << "Element is not found." << std::endl;
-        SimpleLogger::log("Element not found.");
+        std::cout << "Element not found." << std::endl;
+        SimpleLogger::log("Element not found.", LogLevel::WARNING);
     }
 
-    SimpleLogger::log("Program ended.");
+    SimpleLogger::log("Program ended.", LogLevel::INFO);
     return 0;
 }
