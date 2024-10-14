@@ -1,5 +1,5 @@
-#include "BinarySearch.h"
-#include "SimpleLogger.h"
+#include <BinarySearch.h>
+#include <SimpleLogger.h>
 #include <algorithm>  // Для std::sort
 
 /**
